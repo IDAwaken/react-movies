@@ -5,12 +5,14 @@ class Search extends Component {
     text: "",
   };
 
+  // Update the state when submitting the search
   onSubmit = (e) => {
     e.preventDefault();
     this.props.searchMovies(this.state.text);
     this.setState({ text: "" });
   };
 
+  // Tracking input in search field
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -26,6 +28,7 @@ class Search extends Component {
                 name="text"
                 placeholder="Search a movie title..."
                 className="form-control w-100 offset md-6 mb-2"
+                value={this.state.text}
                 onChange={this.onChange}
               />
             </div>
@@ -34,6 +37,7 @@ class Search extends Component {
                 type="submit"
                 className="btn btn-block bg-info text-light"
                 value="Search"
+                onSubmit={this.onSubmit}
               />
             </div>
             <input

@@ -9,23 +9,26 @@ import "./App.scss";
 class App extends Component {
   state = {
     movies: [],
-    searchQuery: "fast and furious",
+    searchQuery: "",
     loading: false,
   };
 
   // Fetching movies from the API
-  async componentDidMount() {
-    this.setState({ loading: true });
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=da28ea80576fc0af9b22a9958109445b&query=${this.state.searchQuery}`
-    );
-    this.setState({ movies: res.data.results, loading: false });
-    console.log(this.state.movies);
-  }
+  // async componentDidMount() {
+  //   this.setState({ loading: true });
+  //   const res = await axios.get(
+  //     `https://api.themoviedb.org/3/search/movie?api_key=da28ea80576fc0af9b22a9958109445b&query=${this.state.searchQuery}`
+  //   );
+  //   this.setState({ movies: res.data.results, loading: false });
+  //   console.log(this.state.movies);
+  // }
 
   // Search Movies
-  searchMovies = (text) => {
-    console.log(text);
+  searchMovies = async (text) => {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/search/movie?api_key=da28ea80576fc0af9b22a9958109445b&query=${text}`
+    );
+    this.setState({ movies: res.data.results, loading: false });
   };
 
   render() {
