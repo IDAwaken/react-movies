@@ -9,7 +9,6 @@ import "./App.scss";
 class App extends Component {
   state = {
     movies: [],
-
     loading: false,
   };
 
@@ -21,14 +20,28 @@ class App extends Component {
     this.setState({ movies: res.data.results, loading: false });
   };
 
+  // Clear Movies from State
+  clearMovies = () => {
+    this.setState({
+      movies: [],
+      loading: false,
+    });
+  };
+
   render() {
+    const { movies, loading } = this.state;
+
     return (
       <Router>
         <div className="App">
           <Navbar />
           <div className="container">
-            <Search searchMovies={this.searchMovies} />
-            <Movies loading={this.state.loading} movies={this.state.movies} />
+            <Search
+              searchMovies={this.searchMovies}
+              clearMovies={this.clearMovies}
+              showClearBtn={movies.length > 0 ? true : false}
+            />
+            <Movies loading={loading} movies={movies} />
           </div>
         </div>
       </Router>

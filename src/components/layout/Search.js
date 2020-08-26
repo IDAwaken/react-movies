@@ -12,12 +12,14 @@ class Search extends Component {
     this.setState({ text: "" });
   };
 
-  // Tracking input in search field
+  // Tracking input in search
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
+    const { showClearBtn, clearMovies } = this.props;
+
     return (
       <div className="row mt-3">
         <div className="col-12">
@@ -40,11 +42,16 @@ class Search extends Component {
                 onSubmit={this.onSubmit}
               />
             </div>
-            <input
-              type="submit"
-              value="Clear"
-              className="btn btn-block bg-dark text-light"
-            />
+            {showClearBtn && (
+              <button
+                type="submit"
+                value="Clear"
+                className="btn btn-block bg-dark text-light"
+                onClick={clearMovies}
+              >
+                Clear
+              </button>
+            )}
           </form>
         </div>
       </div>
