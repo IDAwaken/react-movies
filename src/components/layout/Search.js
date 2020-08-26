@@ -7,9 +7,14 @@ class Search extends Component {
 
   // Update the state when submitting the search
   onSubmit = (e) => {
-    e.preventDefault();
-    this.props.searchMovies(this.state.text);
-    this.setState({ text: "" });
+    if (this.state.text === "") {
+      e.preventDefault();
+      this.props.setAlert("Please enter a movie title", "danger");
+    } else {
+      e.preventDefault();
+      this.props.searchMovies(this.state.text);
+      this.setState({ text: "" });
+    }
   };
 
   // Tracking input in search

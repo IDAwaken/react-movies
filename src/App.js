@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Search from "./components/layout/Search";
+import Alert from "./components/layout/Alert";
 import Movies from "./components/movies/Movies";
 import axios from "axios";
 import "./App.scss";
@@ -10,6 +11,7 @@ class App extends Component {
   state = {
     movies: [],
     loading: false,
+    alert: null,
   };
 
   // Search Movies
@@ -28,18 +30,32 @@ class App extends Component {
     });
   };
 
+  // Alert when the search field is empty
+  setAlert = (msg, type) => {
+    this.setState({
+      alert: {
+        msg,
+        type,
+      },
+    });
+    // Timeout for the alert to disappear
+    setTimeout(() => this.setState({ alert: null }), 3000);
+  };
+
   render() {
-    const { movies, loading } = this.state;
+    const { movies, loading, alert } = this.state;
 
     return (
       <Router>
         <div className="App">
           <Navbar />
           <div className="container">
+            <Alert alert={alert} />
             <Search
               searchMovies={this.searchMovies}
               clearMovies={this.clearMovies}
               showClearBtn={movies.length > 0 ? true : false}
+              setAlert={this.setAlert}
             />
             <Movies loading={loading} movies={movies} />
           </div>
