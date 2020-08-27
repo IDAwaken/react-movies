@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Search from "./components/layout/Search";
 import Alert from "./components/layout/Alert";
@@ -19,7 +19,6 @@ class App extends Component {
     const res = await axios.get(
       "https://api.themoviedb.org/3/trending/movie/week?api_key=da28ea80576fc0af9b22a9958109445b"
     );
-
     this.setState({ trendingMovies: res.data.results });
     console.log(this.state.trendingMovies);
   }
@@ -62,13 +61,23 @@ class App extends Component {
           <Navbar />
           <div className="container">
             <Alert alert={alert} />
-            <Search
-              searchMovies={this.searchMovies}
-              clearMovies={this.clearMovies}
-              showClearBtn={movies.length > 0 ? true : false}
-              setAlert={this.setAlert}
-            />
-            <Movies loading={loading} movies={movies} />
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <>
+                    <Search
+                      searchMovies={this.searchMovies}
+                      clearMovies={this.clearMovies}
+                      showClearBtn={movies.length > 0 ? true : false}
+                      setAlert={this.setAlert}
+                    />
+                    <Movies loading={loading} movies={movies} />
+                  </>
+                )}
+              />
+            </Switch>
           </div>
         </div>
       </Router>
