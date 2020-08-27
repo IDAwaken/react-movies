@@ -10,9 +10,19 @@ import "./App.scss";
 class App extends Component {
   state = {
     movies: [],
+    trendingMovies: [],
     loading: false,
     alert: null,
   };
+
+  async componentDidMount() {
+    const res = await axios.get(
+      "https://api.themoviedb.org/3/trending/movie/week?api_key=da28ea80576fc0af9b22a9958109445b"
+    );
+
+    this.setState({ trendingMovies: res.data.results });
+    console.log(this.state.trendingMovies);
+  }
 
   // Search Movies
   searchMovies = async (text) => {
@@ -20,6 +30,7 @@ class App extends Component {
       `https://api.themoviedb.org/3/search/movie?api_key=da28ea80576fc0af9b22a9958109445b&query=${text}`
     );
     this.setState({ movies: res.data.results, loading: false });
+    console.log(res.data);
   };
 
   // Clear Movies from State
