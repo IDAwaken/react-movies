@@ -4,32 +4,43 @@ import Navbar from "./components/layout/Navbar";
 import Search from "./components/layout/Search";
 import Alert from "./components/layout/Alert";
 import Movies from "./components/movies/Movies";
+import MovieDetails from "./components/movies/MovieDetails";
+import About from "./components/pages/About";
 import axios from "axios";
 import "./App.scss";
 
 class App extends Component {
   state = {
     movies: [],
+    movie: {},
     trendingMovies: [],
     loading: false,
     alert: null,
   };
 
+  // Get trending movies
   async componentDidMount() {
     const res = await axios.get(
       "https://api.themoviedb.org/3/trending/movie/week?api_key=da28ea80576fc0af9b22a9958109445b"
     );
     this.setState({ trendingMovies: res.data.results });
-    console.log(this.state.trendingMovies);
   }
 
   // Search Movies
   searchMovies = async (text) => {
+    this.setState({ loading: true });
     const res = await axios.get(
       `https://api.themoviedb.org/3/search/movie?api_key=da28ea80576fc0af9b22a9958109445b&query=${text}`
     );
     this.setState({ movies: res.data.results, loading: false });
-    console.log(res.data);
+  };
+
+  // Get single movie info
+  getMovie = async (movie_id) => {
+    this.setState({ loading: true });
+    const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=da28ea80576fc0af9b22a9958109445b&language=en-US
+    `);
+    this.setState({ movie: res.data, loading: false });
   };
 
   // Clear Movies from State
@@ -53,7 +64,7 @@ class App extends Component {
   };
 
   render() {
-    const { movies, loading, alert } = this.state;
+    const { movies, movie, loading, alert } = this.state;
 
     return (
       <Router>
@@ -75,6 +86,19 @@ class App extends Component {
                     />
                     <Movies loading={loading} movies={movies} />
                   </>
+                )}
+              />
+              <Route exact path="/about" component={About} />
+              <Route
+                exact
+                path="/movie/:id"
+                render={(props) => (
+                  <MovieDetails
+                    {...props}
+                    getMovie={this.getMovie}
+                    movie={movie}
+                    loading={loading}
+                  />
                 )}
               />
             </Switch>

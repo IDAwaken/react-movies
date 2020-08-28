@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const MovieItem = ({ movie: { title, poster_path } }) => {
+const MovieItem = ({ movie: { title, id, poster_path } }) => {
   return (
     <div className="card-group">
       <div className="card text-center">
@@ -24,7 +24,7 @@ const MovieItem = ({ movie: { title, poster_path } }) => {
           <span className="card-title card-text-size">{title}</span>
         </div>
         <div className="card-footer">
-          <Link to="/" className="btn btn-dark bg-info text-white">
+          <Link to={`/movie/${id}`} className="btn btn-dark bg-info text-white">
             View Details
           </Link>
         </div>
