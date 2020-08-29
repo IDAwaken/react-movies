@@ -1,6 +1,6 @@
 import React from "react";
 
-const Badge = ({ genre: { name } }) => {
+const Genres = ({ genre: { name } }) => {
   return (
     <>
       <span className="badge badge-danger ml-2">{name}</span>
@@ -8,4 +8,4 @@ const Badge = ({ genre: { name } }) => {
   );
 };
 
-export default Badge;
+export default Genres;

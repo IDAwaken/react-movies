@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
-import Badge from "./Badge";
+import Genres from "./Genres";
 
 class MovieDetails extends Component {
   componentDidMount() {
@@ -48,7 +48,7 @@ class MovieDetails extends Component {
                       <div>
                         Genres:
                         {genres.map((genre) => (
-                          <Badge key={genre.id} genre={genre} />
+                          <Genres key={genre.id} genre={genre} />
                         ))}
                       </div>
                     </div>
