@@ -14,6 +14,7 @@ class App extends Component {
     movies: [],
     movie: {},
     trendingMovies: [],
+    reviews: [],
     loading: false,
     alert: null,
   };
@@ -35,12 +36,21 @@ class App extends Component {
     this.setState({ movies: res.data.results, loading: false });
   };
 
-  // Get single movie info
+  // Get single movie info and reviews
   getMovie = async (movie_id) => {
     this.setState({ loading: true });
     const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=da28ea80576fc0af9b22a9958109445b&language=en-US
     `);
     this.setState({ movie: res.data, loading: false });
+  };
+
+  // Get single movie's review
+  getMovieReviews = async (movie_id) => {
+    this.setState({ loading: true });
+    const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/reviews?api_key=da28ea80576fc0af9b22a9958109445b&language=en-US
+    `);
+    this.setState({ reviews: res.data.results, loading: false });
+    console.log(this.state.reviews);
   };
 
   // Clear Movies from State
@@ -64,7 +74,7 @@ class App extends Component {
   };
 
   render() {
-    const { movies, movie, loading, alert } = this.state;
+    const { movies, movie, loading, alert, reviews } = this.state;
 
     return (
       <Router>
@@ -95,9 +105,11 @@ class App extends Component {
                 render={(props) => (
                   <MovieDetails
                     {...props}
-                    getMovie={this.getMovie}
                     movie={movie}
+                    getMovie={this.getMovie}
                     loading={loading}
+                    reviews={reviews}
+                    getMovieReviews={this.getMovieReviews}
                   />
                 )}
               />

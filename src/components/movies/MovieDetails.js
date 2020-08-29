@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
+import Reviews from "../reviews/Reviews";
 
 class MovieDetails extends Component {
   componentDidMount() {
     this.props.getMovie(this.props.match.params.id);
+    this.props.getMovieReviews(this.props.match.params.id);
   }
 
   render() {
@@ -17,24 +19,26 @@ class MovieDetails extends Component {
       genres = [],
     } = this.props.movie;
 
-    const { loading } = this.props;
+    const { loading, reviews } = this.props;
 
     if (loading) {
       return <Spinner />;
     } else {
       return (
-        <div className="row my-2">
-          <div className="col-12 col-sm-12">
+        <div className="row my-2 mx-0">
+          <div className="col-12 col-sm-12 p-0">
             <Link to="/" className="btn bg-info text-light mb-2 btn-sm">
               <i className="fa fa-arrow-left" /> Back To Search
             </Link>
             <div className="card">
-              <div className="row">
+              <div className="row m-0">
                 <div className="col-4 mx-auto p-0">
                   <img
                     src={`https://image.tmdb.org/t/p/original/${poster_path}`}
                     alt=""
-                    style={{ width: "100%" }}
+                    style={{
+                      width: "100%",
+                    }}
                   />
                 </div>
                 <div className="col-sm-12 col-md-8 col-lg-8">
@@ -62,6 +66,8 @@ class MovieDetails extends Component {
               </div>
             </div>
           </div>
+
+          <Reviews reviews={reviews} />
         </div>
       );
     }
