@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Search from "./components/layout/Search";
@@ -9,116 +9,105 @@ import About from "./components/pages/About";
 import axios from "axios";
 import "./App.scss";
 
-class App extends Component {
-  state = {
-    movies: [],
-    movie: {},
-    trendingMovies: [],
-    reviews: [],
-    loading: false,
-    alert: null,
-  };
+const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [movie, setMovie] = useState({});
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   // Get trending movies
-  async componentDidMount() {
-    const res = await axios.get(
-      "https://api.themoviedb.org/3/trending/movie/week?api_key=da28ea80576fc0af9b22a9958109445b"
-    );
-    this.setState({ trendingMovies: res.data.results });
-  }
+  // async componentDidMount() {
+  //   const res = await axios.get(
+  //     "https://api.themoviedb.org/3/trending/movie/week?api_key=da28ea80576fc0af9b22a9958109445b"
+  //   );
+  //   this.setState({ trendingMovies: res.data.results });
+  //   console.log(res.data);
+  // }
 
   // Search Movies
-  searchMovies = async (text) => {
-    this.setState({ loading: true });
+  const searchMovies = async (text) => {
+    setLoading(true);
     const res = await axios.get(
       `https://api.themoviedb.org/3/search/movie?api_key=da28ea80576fc0af9b22a9958109445b&query=${text}`
     );
-    this.setState({ movies: res.data.results, loading: false });
+    setMovies(res.data.results);
+    setLoading(false);
   };
 
   // Get single movie info and reviews
-  getMovie = async (movie_id) => {
-    this.setState({ loading: true });
+  const getMovie = async (movie_id) => {
+    setLoading(true);
     const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=da28ea80576fc0af9b22a9958109445b&language=en-US
     `);
-    this.setState({ movie: res.data, loading: false });
+    setMovie(res.data);
+    setLoading(false);
   };
 
   // Get single movie's review
-  getMovieReviews = async (movie_id) => {
-    this.setState({ loading: true });
+  const getMovieReviews = async (movie_id) => {
+    setLoading(true);
     const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/reviews?api_key=da28ea80576fc0af9b22a9958109445b&language=en-US
     `);
-    this.setState({ reviews: res.data.results, loading: false });
-    console.log(this.state.reviews);
+    setReviews(res.data.results);
+    setLoading(false);
   };
 
   // Clear Movies from State
-  clearMovies = () => {
-    this.setState({
-      movies: [],
-      loading: false,
-    });
+  const clearMovies = () => {
+    setMovies([]);
+    setLoading(false);
   };
 
   // Alert when the search field is empty
-  setAlert = (msg, type) => {
-    this.setState({
-      alert: {
-        msg,
-        type,
-      },
-    });
+  const showAlert = (msg, type) => {
+    setAlert({ msg, type });
     // Timeout for the alert to disappear
-    setTimeout(() => this.setState({ alert: null }), 3000);
+    setTimeout(() => setAlert(null), 3000);
   };
 
-  render() {
-    const { movies, movie, loading, alert, reviews } = this.state;
-
-    return (
-      <Router>
-        <div className="App">
-          <Navbar />
-          <div className="container">
-            <Alert alert={alert} />
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={(props) => (
-                  <>
-                    <Search
-                      searchMovies={this.searchMovies}
-                      clearMovies={this.clearMovies}
-                      showClearBtn={movies.length > 0 ? true : false}
-                      setAlert={this.setAlert}
-                    />
-                    <Movies loading={loading} movies={movies} />
-                  </>
-                )}
-              />
-              <Route exact path="/about" component={About} />
-              <Route
-                exact
-                path="/movie/:id"
-                render={(props) => (
-                  <MovieDetails
-                    {...props}
-                    movie={movie}
-                    getMovie={this.getMovie}
-                    loading={loading}
-                    reviews={reviews}
-                    getMovieReviews={this.getMovieReviews}
+  return (
+    <Router>
+      <div className="App">
+        <Navbar />
+        <div className="container">
+          <Alert alert={alert} />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <>
+                  <Search
+                    searchMovies={searchMovies}
+                    clearMovies={clearMovies}
+                    showClearBtn={movies.length > 0 ? true : false}
+                    showAlert={showAlert}
                   />
-                )}
-              />
-            </Switch>
-          </div>
+                  <Movies loading={loading} movies={movies} />
+                </>
+              )}
+            />
+            <Route exact path="/about" component={About} />
+            <Route
+              exact
+              path="/movie/:id"
+              render={(props) => (
+                <MovieDetails
+                  {...props}
+                  movie={movie}
+                  getMovie={getMovie}
+                  loading={loading}
+                  reviews={reviews}
+                  getMovieReviews={getMovieReviews}
+                />
+              )}
+            />
+          </Switch>
         </div>
-      </Router>
-    );
-  }
-}
+      </div>
+    </Router>
+  );
+};
 
 export default App;
