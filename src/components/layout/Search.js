@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Search = ({ searchMovies, clearMovies, showClearBtn, setAlert }) => {
+const Search = ({ searchMovies, clearMovies, showClearBtn, showAlert }) => {
   // state = {
   //   text: "",
   // };
@@ -11,7 +11,7 @@ const Search = ({ searchMovies, clearMovies, showClearBtn, setAlert }) => {
   const onSubmit = (e) => {
     if (text === "") {
       e.preventDefault();
-      setAlert("Please enter a movie title", "danger");
+      showAlert("Please enter a movie title", "danger");
     } else {
       e.preventDefault();
       searchMovies(text);
