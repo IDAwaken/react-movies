@@ -20,8 +20,8 @@ const MovieItem = ({ movie: { title, id, poster_path, release_date } }) => {
             />
           )}
         </div>
-        <div className="card-body">
-          <span className="card-title card-text-size">{title}</span>
+        <div className="card-body d-flex align-items-center justify-content-center">
+          <span className="card-title card-text-size m-0">{title}</span>
         </div>
         <div className="card-footer">
           <p>{release_date}</p>
