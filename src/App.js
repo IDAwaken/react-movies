@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Search from "./components/layout/Search";
@@ -12,18 +12,24 @@ import "./App.scss";
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [movie, setMovie] = useState({});
+  // const [trendingMovies, setTrendingMovies] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
-  // Get trending movies
-  // async componentDidMount() {
+  // // ComponentDidMount
+  // useEffect(() => {
+  //   loadTrendingMoviesData();
+  //   // eslint-disable-next-line
+  // }, []);
+
+  // // Fetch Weekly Trending Movies
+  // const loadTrendingMoviesData = async () => {
   //   const res = await axios.get(
   //     "https://api.themoviedb.org/3/trending/movie/week?api_key=da28ea80576fc0af9b22a9958109445b"
   //   );
-  //   this.setState({ trendingMovies: res.data.results });
-  //   console.log(res.data);
-  // }
+  //   setTrendingMovies(res.data.results);
+  // };
 
   // Search Movies
   const searchMovies = async (text) => {
