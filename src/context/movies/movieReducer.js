@@ -22,6 +22,12 @@ export default (state, action) => {
         loading: false,
       };
 
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
     case CLEAR_MOVIES:
       return {
         ...state,
