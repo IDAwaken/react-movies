@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import MovieContext from "../../context/movies/movieContext";
 
-const Search = ({ searchMovies, clearMovies, showClearBtn, showAlert }) => {
-  // state = {
-  //   text: "",
-  // };
+const Search = ({ showAlert }) => {
+  const movieContext = useContext(MovieContext);
+
+  const { searchMovies, movies, clearMovies } = movieContext;
 
   const [text, setText] = useState("");
 
@@ -46,7 +47,7 @@ const Search = ({ searchMovies, clearMovies, showClearBtn, showAlert }) => {
               onSubmit={onSubmit}
             />
           </div>
-          {showClearBtn && (
+          {movies.length > 0 && (
             <button
               type="submit"
               value="Clear"

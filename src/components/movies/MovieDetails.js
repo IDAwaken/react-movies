@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
 import Reviews from "../reviews/Reviews";
+import MovieContext from "../../context/movies/movieContext";
 
-const MovieDetails = ({
-  movie,
-  loading,
-  getMovie,
-  getMovieReviews,
-  match,
-  reviews,
-}) => {
+const MovieDetails = ({ match }) => {
+  const movieContext = useContext(MovieContext);
+  const { getMovie, loading, movie, getMovieReviews, reviews } = movieContext;
+
   useEffect(() => {
     getMovie(match.params.id);
     getMovieReviews(match.params.id);

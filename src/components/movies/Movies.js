@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import MovieItem from "./MovieItem";
 import Spinner from "../layout/Spinner";
+import MovieContext from "../../context/movies/movieContext";
 
-const Movies = ({ movies, loading }) => {
+const Movies = () => {
+  const movieContext = useContext(MovieContext);
+
+  const { loading, movies } = movieContext;
+
   if (loading) {
     return <Spinner />;
   } else {

@@ -6,15 +6,13 @@ import Alert from "./components/layout/Alert";
 import Movies from "./components/movies/Movies";
 import MovieDetails from "./components/movies/MovieDetails";
 import About from "./components/pages/About";
-import axios from "axios";
+
+import MovieState from "./context/movies/MovieState";
+
 import "./App.scss";
 
 const App = () => {
-  const [movies, setMovies] = useState([]);
-  const [movie, setMovie] = useState({});
   // const [trendingMovies, setTrendingMovies] = useState([]);
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
   // // ComponentDidMount
@@ -31,40 +29,6 @@ const App = () => {
   //   setTrendingMovies(res.data.results);
   // };
 
-  // Search Movies
-  const searchMovies = async (text) => {
-    setLoading(true);
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=da28ea80576fc0af9b22a9958109445b&query=${text}`
-    );
-    setMovies(res.data.results);
-    setLoading(false);
-  };
-
-  // Get single movie info and reviews
-  const getMovie = async (movie_id) => {
-    setLoading(true);
-    const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=da28ea80576fc0af9b22a9958109445b&language=en-US
-    `);
-    setMovie(res.data);
-    setLoading(false);
-  };
-
-  // Get single movie's review
-  const getMovieReviews = async (movie_id) => {
-    setLoading(true);
-    const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/reviews?api_key=da28ea80576fc0af9b22a9958109445b&language=en-US
-    `);
-    setReviews(res.data.results);
-    setLoading(false);
-  };
-
-  // Clear Movies from State
-  const clearMovies = () => {
-    setMovies([]);
-    setLoading(false);
-  };
-
   // Alert when the search field is empty
   const showAlert = (msg, type) => {
     setAlert({ msg, type });
@@ -73,46 +37,34 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <div className="container">
-          <Alert alert={alert} />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={(props) => (
-                <>
-                  <Search
-                    searchMovies={searchMovies}
-                    clearMovies={clearMovies}
-                    showClearBtn={movies.length > 0 ? true : false}
-                    showAlert={showAlert}
-                  />
-                  <Movies loading={loading} movies={movies} />
-                </>
-              )}
-            />
-            <Route exact path="/about" component={About} />
-            <Route
-              exact
-              path="/movie/:id"
-              render={(props) => (
-                <MovieDetails
-                  {...props}
-                  movie={movie}
-                  getMovie={getMovie}
-                  loading={loading}
-                  reviews={reviews}
-                  getMovieReviews={getMovieReviews}
-                />
-              )}
-            />
-          </Switch>
+    <MovieState>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className="container">
+            <Alert alert={alert} />
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <>
+                    <Search
+                      // clearMovies={clearMovies}
+                      // showClearBtn={movies.length > 0 ? true : false}
+                      showAlert={showAlert}
+                    />
+                    <Movies />
+                  </>
+                )}
+              />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/movie/:id" component={MovieDetails} />
+            </Switch>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </MovieState>
   );
 };
 
