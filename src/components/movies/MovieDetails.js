@@ -24,6 +24,7 @@ const MovieDetails = ({
     overview,
     poster_path,
     genres = [],
+    tagline,
   } = movie;
 
   if (loading) {
@@ -50,6 +51,7 @@ const MovieDetails = ({
                 <div className="card-body">
                   <div className="card-title">
                     <h4>{title}</h4>
+                    <p className="font-italic">{tagline}</p>
                     <p>Release Date: {release_date}</p>
                     <p>{overview}</p>
                     <p>Rate: {vote_average}/10</p>
