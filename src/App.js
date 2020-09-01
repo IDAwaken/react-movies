@@ -8,13 +8,11 @@ import MovieDetails from "./components/movies/MovieDetails";
 import About from "./components/pages/About";
 
 import MovieState from "./context/movies/MovieState";
+import AlertState from "./context/alert/AlertState";
 
 import "./App.scss";
 
 const App = () => {
-  // const [trendingMovies, setTrendingMovies] = useState([]);
-  const [alert, setAlert] = useState(null);
-
   // // ComponentDidMount
   // useEffect(() => {
   //   loadTrendingMoviesData();
@@ -30,40 +28,33 @@ const App = () => {
   // };
 
   // Alert when the search field is empty
-  const showAlert = (msg, type) => {
-    setAlert({ msg, type });
-    // Timeout for the alert to disappear
-    setTimeout(() => setAlert(null), 3000);
-  };
 
   return (
     <MovieState>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <div className="container">
-            <Alert alert={alert} />
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={(props) => (
-                  <>
-                    <Search
-                      // clearMovies={clearMovies}
-                      // showClearBtn={movies.length > 0 ? true : false}
-                      showAlert={showAlert}
-                    />
-                    <Movies />
-                  </>
-                )}
-              />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/movie/:id" component={MovieDetails} />
-            </Switch>
+      <AlertState>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <div className="container">
+              <Alert />
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={(props) => (
+                    <>
+                      <Search />
+                      <Movies />
+                    </>
+                  )}
+                />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/movie/:id" component={MovieDetails} />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </Router>
+        </Router>
+      </AlertState>
     </MovieState>
   );
 };

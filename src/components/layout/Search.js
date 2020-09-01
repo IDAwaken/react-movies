@@ -1,10 +1,13 @@
 import React, { useState, useContext } from "react";
 import MovieContext from "../../context/movies/movieContext";
+import AlertContext from "../../context/alert/alertContext";
 
-const Search = ({ showAlert }) => {
+const Search = () => {
   const movieContext = useContext(MovieContext);
+  const alertContext = useContext(AlertContext);
 
   const { searchMovies, movies, clearMovies } = movieContext;
+  const { setAlert } = alertContext;
 
   const [text, setText] = useState("");
 
@@ -12,7 +15,7 @@ const Search = ({ showAlert }) => {
   const onSubmit = (e) => {
     if (text === "") {
       e.preventDefault();
-      showAlert("Please enter a movie title", "danger");
+      setAlert("Please enter a movie title", "danger");
     } else {
       e.preventDefault();
       searchMovies(text);
