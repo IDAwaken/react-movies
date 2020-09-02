@@ -43,7 +43,7 @@ const App = () => {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/about" component={About} />
                 <Route exact path="/movie/:id" component={MovieDetails} />
-                <Route component={NotFound} className="mt-3" />
+                <Route component={NotFound} />
               </Switch>
             </div>
           </div>
