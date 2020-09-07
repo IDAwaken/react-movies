@@ -7,6 +7,7 @@ import About from "./components/pages/About";
 import SearchMovies from "./components/pages/SearchMovies";
 import NotFound from "./components/pages/NotFound";
 import Home from "./components/pages/Home";
+
 import axios from "axios";
 
 import MovieState from "./context/movies/MovieState";
@@ -16,29 +17,37 @@ import "./App.scss";
 
 const App = () => {
   const [trending, setTrending] = useState([]);
+  const [popular, setPopular] = useState([]);
+  const [topRated, setTopRated] = useState([]);
 
   useEffect(() => {
+    // Trending Movies
     const getTrendingMovies = async () => {
       const res = await axios.get(
         "https://api.themoviedb.org/3/trending/movie/week?api_key=da28ea80576fc0af9b22a9958109445b"
       );
       setTrending(res.data.results);
-      console.log(res.data.results);
+    };
+    // Popular Movies
+    const getPopularMovies = async () => {
+      const res = await axios.get(
+        "https://api.themoviedb.org/3/movie/popular?api_key=da28ea80576fc0af9b22a9958109445b&language=en-US&page=1"
+      );
+      setPopular(res.data.results);
+    };
+    // Latest Movies
+    const getTopRatedMovies = async () => {
+      const res = await axios.get(
+        "https://api.themoviedb.org/3/movie/top_rated?api_key=da28ea80576fc0af9b22a9958109445b&language=en-US&page=1"
+      );
+      setTopRated(res.data.results);
     };
 
     getTrendingMovies();
-
-    // getTrendingMovies();
+    getPopularMovies();
+    getTopRatedMovies();
     // eslint-disable-next-line
   }, []);
-
-  // // Fetch Weekly Trending Movies
-  // const getTrendingMovies = async () => {
-  //   const res = await axios.get(
-  //     "https://api.themoviedb.org/3/trending/movie/week?api_key=da28ea80576fc0af9b22a9958109445b"
-  //   );
-  //   setTrending(res.data.results);
-  // };
 
   return (
     <MovieState>
@@ -52,7 +61,14 @@ const App = () => {
                 <Route
                   exact
                   path="/"
-                  render={(props) => <Home trending={trending} />}
+                  render={(props) => (
+                    <Home
+                      trending={trending}
+                      popular={popular}
+                      topRated={topRated}
+
+                    />
+                  )}
                 />
                 <Route exact path="/search" component={SearchMovies} />
                 <Route exact path="/about" component={About} />

@@ -6,42 +6,49 @@ html {
 
 .movies-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-gap: 1rem 0.5rem;
   margin: 1rem 0;
 }
 
-@media only screen and (max-width: 1024) {
-  .movies-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 1rem;
-  }
+.tab-movies-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-gap: 1rem 0.5rem;
+  margin: 1rem 0;
 }
 
-@media only screen and (max-width: 992px) {
-  .movies-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1rem;
-  }
-}
+// @media only screen and (max-width: 1024) {
+//   .movies-container {
+//     display: grid;
+//     grid-template-columns: repeat(4, 1fr);
+//     grid-gap: 1rem;
+//   }
+// }
 
-@media only screen and (max-width: 768px) {
-  .movies-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1rem;
-  }
-}
+// @media only screen and (max-width: 992px) {
+//   .movies-container {
+//     display: grid;
+//     grid-template-columns: repeat(3, 1fr);
+//     grid-gap: 1rem;
+//   }
+// }
 
-@media only screen and (max-width: 576px) {
-  .movies-container {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 1rem;
-  }
-}
+// @media only screen and (max-width: 768px) {
+//   .movies-container {
+//     display: grid;
+//     grid-template-columns: repeat(2, 1fr);
+//     grid-gap: 1rem;
+//   }
+// }
+
+// @media only screen and (max-width: 576px) {
+//   .movies-container {
+//     display: grid;
+//     grid-template-columns: repeat(1, 1fr);
+//     grid-gap: 1rem;
+//   }
+// }
 
 .card-text-size {
   font-size: 1.1rem;
