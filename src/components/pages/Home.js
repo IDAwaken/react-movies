@@ -30,10 +30,7 @@ const Home = ({ trending = [], popular = [], topRated = [] }) => {
       <Tab eventKey="popular" title="Popular">
         <div className="tab-movies-container">
           {popular.map((popularMovie) => (
-            <PopularMovies
-              key={popularMovie.id}
-              popularMovie={popularMovie}
-            />
+            <PopularMovies key={popularMovie.id} popularMovie={popularMovie} />
           ))}
         </div>
       </Tab>
