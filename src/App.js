@@ -47,7 +47,7 @@ const App = () => {
     getPopularMovies();
     getTopRatedMovies();
     // eslint-disable-next-line
-  }, [trending, popular, topRated]);
+  }, []);
 
   return (
     <MovieState>
