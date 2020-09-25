@@ -16,6 +16,11 @@ Movie Finder Web App built with React using TMDB API
 - Bootstrap Material Design
 - Node Sass
 
+## Todo List
+
+- [ ] Add paginations
+- [ ] Implement infinite scrolling
+
 ## Screenshots:
 
 ### Home Page
